@@ -1,0 +1,46 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/*
+ * Copyright 2024 Toradex
+ */
+
+// RVT70HSLNWCA0 DSI display (7 inch) with a resolution of 1024x600 pixel.
+
+&{/} {
+	panel-lvds {
+		compatible = "panel-lvds";
+		backlight = <&backlight>;
+		data-mapping = "vesa-24";
+		height-mm = <86>;
+		width-mm = <154>;
+		status = "okay";
+
+		/*
+		 * These timings are hand-optimized for improved stability compared to
+		 * theoretical values. Specifically, HBP is set to 100 and combined with
+		 * HS to total 160, matching the original HBP value in the datasheet. The
+		 * original horizontal timings caused issues with proper display functionality
+		 * on iMX8* platforms.
+		 */
+		panel-timing {
+            clock-frequency = <40600000 51200000 67200000>;
+            hactive = <1024>;
+            vactive = <600>;
+            hsync-len = <1 5 140>;
+            hback-porch = <160 160 160>;
+            hfront-porch = <16 160 216>;
+            vsync-len = <1 10 20>;
+            vback-porch = <23 23 23>;
+            vfront-porch = <1 12 126>;
+            pixelclk-active = <1>;
+            de-active = <1>;
+            hsync-active = <0>;
+            vsync-active = <0>;
+        };
+
+		port {
+			panel_in_lvds_riv: endpoint {
+				remote-endpoint = <&lvds_out_panel_riv>;
+			};
+		};
+	};
+};
