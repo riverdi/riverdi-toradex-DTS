@@ -3,31 +3,28 @@
  * Copyright 2023 Toradex
  */
 
-// Verdin with connected Capacitive Touch Display 12.1" DSI.
+// Verdin with connected Capacitive Touch Display 10.1" DSI.
 
 /dts-v1/;
 /plugin/;
 
 / {
-	compatible = "toradex,verdin-imx8mp";
+	compatible = "toradex,verdin-imx8mm";
 };
 
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/gpio/gpio.h>
-#include "display-rvt121hvdwc00b_overlay.dtsi"
+#include "display-rvt101hvdwc00b_overlay.dtsi"
 
 &backlight {
-	pwms = <&pwm3 0 6666667 0>;
+	pwms = <&pwm1 0 6666667 0>;
 	status = "okay";
 };
 
-&gpu_2d {
+&gpu {
 	status = "okay";
 };
 
-&gpu_3d {
-	status = "okay";
-};
 
 /* Verdin I2C_2_DSI */
 &i2c2 {
@@ -40,7 +37,7 @@
 		reg = <0x2c>;
 		/* IRQ not connected */
 		/* Verdin GPIO_10_DSI (SODIMM 21) */
-		enable-gpios = <&gpio4 28 GPIO_ACTIVE_HIGH>;
+		enable-gpios = <&gpio3 3 GPIO_ACTIVE_HIGH>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_10_dsi>;
 
@@ -68,22 +65,20 @@
 	};
 
 	touch@41 {
-		compatible = "ilitek,ili251x";
+		compatible = "ilitek,ili2132";
 		reg = <0x41>;
 		/* Verdin DSI_1_INT# (TOUCH_INT#, SODIMM 17) */
-		interrupt-parent = <&gpio4>;
-		interrupts = <25 IRQ_TYPE_EDGE_RISING>;
+		interrupt-parent = <&gpio3>;
+		interrupts = <15 IRQ_TYPE_EDGE_RISING>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_9_dsi>, <&pinctrl_i2s_2_bclk_touch_reset>;
 		/* Verdin I2S_2_BCLK (TOUCH_RESET#, SODIMM 42) */
-		reset-gpios = <&gpio5 0 GPIO_ACTIVE_LOW>;
-		touchscreen-size-x = <1280>;
-    	touchscreen-size-y = <800>;
+		reset-gpios = <&gpio3 23 GPIO_ACTIVE_LOW>;
 	};
 };
 
 /* LCDIF to MIPI-DSI */
-&lcdif1 {
+&lcdif {
 	status = "okay";
 };
 
@@ -98,12 +93,4 @@
 			remote-endpoint = <&dsi_riv_in>;
 		};
 	};
-};
-
-&mix_gpu_ml {
-	status = "okay";
-};
-
-&ml_vipsi {
-	status = "okay";
 };
