@@ -19,19 +19,19 @@
 	 * Likely an higher value is needed due to dsi to lvds pipeline.
 	 */
 	panel-timing {
-		clock-frequency = <66300000 69300000 78900000>;
+		clock-frequency = <72400000>;
 		de-active = <1>;
 		hactive = <1280 1280 1280>;
-		hback-porch = <64 64 64>;
-		hfront-porch = <16 16 16>;
+		hback-porch = <68 68 68>;
+		hfront-porch = <72 72 72>;
 		hsync-active = <0>;
-		hsync-len = <24 24 24>;
+		hsync-len = <20 20 20>;
 		pixelclk-active = <1>;
 		vactive = <800 800 800>;
-		vback-porch = <24 24 24>;
-		vfront-porch = <8 8 8>;
+		vback-porch = <13 13 13>;
+		vfront-porch = <15 15 15>;
 		vsync-active = <0>;
-		vsync-len = <8 8 8>;
+		vsync-len = <10 10 10>;
 	};
 
 	port {
